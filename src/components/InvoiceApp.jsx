@@ -37,15 +37,13 @@ const InvoiceApp = () => {
             </tr>
         </thead>
         <tbody>
-         {items.map(item=>{ 
-            return(
-                <tr>
-                    <td>Producto:{item.product}</td>
-                    <td>Precio:{item.price}</td>
-                    <td>Quantity:{item.quantity}</td>
+         {items.map(({id,product,quantity,price})=>(
+                <tr key={id}>
+                    <td>Producto:{product}</td>
+                    <td>Precio:{price}</td>
+                    <td>Quantity:{quantity}</td>
                 </tr>
-            )
-         })}
+         ))}
         </tbody>
     </table>
     </>
