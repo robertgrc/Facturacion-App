@@ -25,7 +25,7 @@ const InvoiceApp = () => {
                 <CompanyView company={company} title="Datos de la Empresa" />
               </div>
             </div>
-            <ListItemsView items={items} />
+            <ListItemsView items={items} title="Productos para la Factura"/>
           </div>
         </div>
       </div>

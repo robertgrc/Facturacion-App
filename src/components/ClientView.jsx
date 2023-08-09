@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 
 const ClientView = ({ client, title }) => {
     const { name: nameClient, address, lastName } = client
@@ -14,5 +15,8 @@ const ClientView = ({ client, title }) => {
         </>
     )
 }
-
+ClientView.propTypes = {
+    title: PropTypes.string.isRequired,
+    client: PropTypes.object.isRequired
+}
 export default ClientView

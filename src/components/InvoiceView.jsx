@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 
 const InvoiceView = ({id, name}) => {
     return (
@@ -7,6 +8,11 @@ const InvoiceView = ({id, name}) => {
             <li className='list-group-item'>Name:{name}</li>
         </ul>
     )
+}
+
+InvoiceView.propTypes = {
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired
 }
 
 export default InvoiceView
