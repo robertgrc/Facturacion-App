@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import getInvoice from './services/getInvoice'
 import InvoiceView from './components/InvoiceView'
 import ClientView from './components/ClientView'
@@ -8,7 +8,14 @@ import TotalView from './components/TotalView'
 
 const InvoiceApp = () => {
 
-  const { id, client, company, items, name, total } = getInvoice();
+  const { id, client, company, items:itemsInitial, name, total } = getInvoice();
+  
+  const [productValue, setProductValue] = useState('')
+  const [priceValue, setPriceValue] = useState(0)
+  const [quantityValue, setQuantityValue] = useState(0)
+
+  const [items, setItems] = useState(itemsInitial)
+
   return (
     <>
       <div className='container'>
@@ -26,8 +33,44 @@ const InvoiceApp = () => {
                 <CompanyView company={company} title="Datos de la Empresa" />
               </div>
             </div>
-            <ListItemsView items={items} title="Productos para la Factura"/>
+            <ListItemsView items={items} title="Productos para la Factura" />
             <TotalView total={total} />
+            <form className="w-50" onSubmit={event=>{
+              event.preventDefault();
+              setItems([...items, { key:4, product:productValue, price:priceValue, quantity:quantityValue}])
+            }}>
+              <input
+                type="text"
+                name="product"
+                placeholder="Producto"
+                className="form-control m-3"
+                onChange={event=>{
+                  console.log(event.target.value)
+                  setProductValue(event.target.value)
+                }} 
+              />
+              <input
+                type="text"
+                name="price"
+                placeholder="Precio"
+                className="form-control m-3"
+                onChange={event=>{
+                  console.log(event.target.value)
+                  setPriceValue(event.target.value)
+                }}
+              />
+              <input
+                type="text"
+                name="quantity"
+                placeholder="Cantidad"
+                className="form-control m-3"
+                onChange={event=>{
+                  console.log(event.target.value)
+                  setQuantityValue(event.target.value)
+                }}
+              />
+              <button type="submit" className='btn btn-primary'>Crear Item</button>
+            </form>
           </div>
         </div>
       </div>
