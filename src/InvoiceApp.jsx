@@ -11,8 +11,8 @@ const InvoiceApp = () => {
   const { id, client, company, items:itemsInitial, name, total } = getInvoice();
   
   const [productValue, setProductValue] = useState('')
-  const [priceValue, setPriceValue] = useState(0)
-  const [quantityValue, setQuantityValue] = useState(0)
+  const [priceValue, setPriceValue] = useState('')
+  const [quantityValue, setQuantityValue] = useState('')
 
   const [items, setItems] = useState(itemsInitial)
 
@@ -37,13 +37,22 @@ const InvoiceApp = () => {
             <TotalView total={total} />
             <form className="w-50" onSubmit={event=>{
               event.preventDefault();
-              setItems([...items, { key:4, product:productValue, price:priceValue, quantity:quantityValue}])
-            }}>
+              setItems([...items, { 
+                id:4, 
+                product:productValue, 
+                price: +priceValue, 
+                quantity: parseInt(quantityValue, 10)
+              }]);
+              setProductValue('');
+              setPriceValue('');
+              setQuantityValue('');
+            } }>
               <input
                 type="text"
                 name="product"
                 placeholder="Producto"
                 className="form-control m-3"
+                value={productValue}
                 onChange={event=>{
                   console.log(event.target.value)
                   setProductValue(event.target.value)
@@ -54,6 +63,7 @@ const InvoiceApp = () => {
                 name="price"
                 placeholder="Precio"
                 className="form-control m-3"
+                value={priceValue}
                 onChange={event=>{
                   console.log(event.target.value)
                   setPriceValue(event.target.value)
@@ -64,6 +74,7 @@ const InvoiceApp = () => {
                 name="quantity"
                 placeholder="Cantidad"
                 className="form-control m-3"
+                value={quantityValue}
                 onChange={event=>{
                   console.log(event.target.value)
                   setQuantityValue(event.target.value)
