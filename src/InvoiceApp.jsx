@@ -1,13 +1,14 @@
 import React from 'react'
-import getInvoice from '../services/getInvoice'
-import InvoiceView from './InvoiceView';
-import ClientView from './ClientView';
-import CompanyView from './CompanyView';
-import ListItemsView from './ListItemsView';
+import getInvoice from './services/getInvoice'
+import InvoiceView from './components/InvoiceView'
+import ClientView from './components/ClientView'
+import CompanyView from './components/CompanyView'
+import ListItemsView from './components/ListItemsView'
+import TotalView from './components/TotalView'
 
 const InvoiceApp = () => {
 
-  const { id, client, company, items, name } = getInvoice();
+  const { id, client, company, items, name, total } = getInvoice();
   return (
     <>
       <div className='container'>
@@ -26,6 +27,7 @@ const InvoiceApp = () => {
               </div>
             </div>
             <ListItemsView items={items} title="Productos para la Factura"/>
+            <TotalView total={total} />
           </div>
         </div>
       </div>

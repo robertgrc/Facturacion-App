@@ -2,8 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types';
 
 const ClientView = ({ client, title }) => {
-    const { name: nameClient, address, lastName } = client
-    const { city, country, number, street } = address
+    const { name: nameClient, lastName, address:{ city, country, number, street }  } = client
     return (
         <>
             <h3>{title}</h3>
