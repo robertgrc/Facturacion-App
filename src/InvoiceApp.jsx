@@ -5,7 +5,7 @@ import ClientView from './components/ClientView'
 import CompanyView from './components/CompanyView'
 import ListItemsView from './components/ListItemsView'
 import TotalView from './components/TotalView'
-
+import { showErrorAlert, showSuccessAlert } from './components/ErrorMessages'
 const InvoiceApp = () => {
 
   const { id, client, company, items: itemsInitial, name, total } = getInvoice();
@@ -38,14 +38,37 @@ const InvoiceApp = () => {
             <TotalView total={total} />
             <form className="w-50" onSubmit={event => {
               event.preventDefault();
-              if (productValue.trim().length <=1) return;
-              if (priceValue.trim().length <=1) return;
-              if (quantityValue.trim().length <1) return;
+              // Validaciones
+              if (productValue.trim().length <= 1) {
+                showErrorAlert('Por favor, ingresa un nombre de producto válido.');
+                return;
+              }
+
+              if (priceValue.trim().length <= 1) {
+                showErrorAlert('Por favor, ingresa un precio válido.');
+                return;
+              }
+
+              if (isNaN(priceValue.trim())) {
+                showErrorAlert('El precio ingresado no es un número válido.');
+                return;
+              }
+
+              if (quantityValue.trim().length < 1) {
+                showErrorAlert('Por favor, ingresa una cantidad válida.');
+                return;
+              }
+
+              if (isNaN(quantityValue.trim())) {
+                showErrorAlert('La cantidad ingresada no es un número válido.');
+                return;
+              }
+              showSuccessAlert();
               setItems([...items, {
                 id: counter,
-                product: productValue,
-                price: +priceValue,
-                quantity: parseInt(quantityValue, 10)
+                product: productValue.trim(),
+                price: +priceValue.trim(),
+                quantity: parseInt(quantityValue.trim(), 10)
               }]);
               setProductValue('');
               setPriceValue('');
