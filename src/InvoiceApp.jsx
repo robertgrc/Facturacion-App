@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import getInvoice from './services/getInvoice'
 import InvoiceView from './components/InvoiceView'
 import ClientView from './components/ClientView'
@@ -8,7 +8,38 @@ import TotalView from './components/TotalView'
 import { showErrorAlert, showSuccessAlert } from './components/ErrorMessages'
 const InvoiceApp = () => {
 
-  const { id, client, company, items: itemsInitial, name, total } = getInvoice();
+  const invoiceInitial = {
+    id:0,
+    name: '',
+    client: {
+        name: '',
+        lastName: '',
+        address: {
+            country: '',
+            city: '',
+            street:'',
+            number: 0
+        }
+    },
+    company:{
+        name: '',
+        fiscalNumber: 0,
+    },
+    items:[]
+}
+
+  const [invoice, setInvoice] = useState(invoiceInitial);
+
+const [items, setItems] = useState([])
+
+useEffect(() => {
+  const data = getInvoice();
+  console.log(data)
+  setInvoice(data)
+  setItems(data.items)
+}, [])
+
+const { id, client, company, name, total, items: itemsInitial } = invoice;
 //* hacemos una mejora en un solo state y luego desestructuramos
   // const [productValue, setProductValue] = useState('')
   // const [priceValue, setPriceValue] = useState('')
@@ -21,13 +52,11 @@ const InvoiceApp = () => {
 
   const {product, price, quantity}= formItemsState;
 
-
-  const [items, setItems] = useState(itemsInitial)
   const [counter, setCounter] = useState(4)
 
   const onInputChange = ({target: {name, value}}) => {
-    console.log(name)
-    console.log(value)
+    // console.log(name)
+    // console.log(value)
     
     setFormItemsState({
       ...formItemsState,
